@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Home from "./pages/home";
 import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
+import WebCam from "./components/100ms/Webcam";
 import logo from "./assets/logo.png";
 import WebCam from "./components/100ms/Webcam";
 import CalendarC from "../src/components/Calendar";
