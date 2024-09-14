@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { db } from "../../firebase"; // Adjust the import path if necessary
+import axios from "axios";
 
 const Modal = ({ isOpen, onClose, job }) => {
+  const [myselfString, setMyselfString] = useState(""); // State for the user input
+  const [isSubmitting, setIsSubmitting] = useState(false); // Loading state for the form submission
+
   const handleApply = async () => {
     const studentId = localStorage.getItem("studentDocId");
     const recruiterId = job.recruiterId; // Assuming the recruiter ID is stored in the job data
 
-    console.log(studentId , job.id , recruiterId)
-    if (!studentId || !job.id || !recruiterId) {
+    if (!studentId || !job.id || !recruiterId || !myselfString) {
       console.error("Missing necessary information to apply for the job.");
       return;
     }
@@ -21,10 +24,29 @@ const Modal = ({ isOpen, onClose, job }) => {
     };
 
     try {
+      setIsSubmitting(true);
+
+      // Save applied job to Firestore
       await addDoc(collection(db, "appliedJobs"), appliedJobData);
+
+      // Send the input text to the API
+      const formData = new FormData();
+      formData.append("input_text", myselfString);
+
+      const response = await axios.post(
+        "http://localhost:5000/upload_text",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
       alert("You have successfully applied for the job!");
+      console.log("API Response:", response.data);
     } catch (error) {
       console.error("Error applying for the job: ", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -42,12 +64,25 @@ const Modal = ({ isOpen, onClose, job }) => {
         <p className="mt-4"><strong>Responsibilities:</strong> {job.responsibilities}</p>
         <p className="mt-4"><strong>Benefits:</strong> {job.benefits}</p>
 
+        {/* Input field to capture "Tell me about yourself" */}
+        <div className="mt-6">
+          <label className="block mb-2 text-lg">Tell me about yourself:</label>
+          <textarea
+            value={myselfString}
+            onChange={(e) => setMyselfString(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded"
+            rows="4"
+            placeholder="Write something about yourself..."
+          ></textarea>
+        </div>
+
         {/* Apply Button */}
         <button
           onClick={handleApply}
-          className="mt-6 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          disabled={isSubmitting || !myselfString.trim()}
+          className={`mt-6 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
         >
-          Apply for this Job
+          {isSubmitting ? "Submitting..." : "Apply for this Job"}
         </button>
 
         {/* Close Button */}
