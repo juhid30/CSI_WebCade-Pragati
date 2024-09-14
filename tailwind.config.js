@@ -9,5 +9,6 @@ export default {
       'purple':'#B23B7B',
     }
   },
-  plugins: [],
+  // eslint-disable-next-line no-undef
+  plugins: [require("daisyui")],
 };

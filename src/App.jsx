@@ -6,30 +6,14 @@ import { LocomotiveScrollProvider } from "react-locomotive-scroll";
 
 import "./App.css";
 import Login from "./components/Login";
+import ListJobs from "./components/ListJobs";
 import Navbar from "./components/Navbar";
 
 function App() {
-  const containerRef = useRef(null);
   return(
     <>
-      <LocomotiveScrollProvider
-      options={
-        {
-          smooth:true,
-        }
-      }
-      watch={[]}
-      containerRef={containerRef}>
-
-
-        <main data-scroll-container ref={containerRef}>
-          <Navbar/>
-          <Login/>
-          <Login/>
-          <Login/>
-        </main>
-
-      </LocomotiveScrollProvider>
+      <Navbar/>
+      <Login />
     </>
   );
 }
