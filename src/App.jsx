@@ -8,13 +8,11 @@ import Home from "./pages/home";
 import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
 import Layout from "./components/layout";
-import Jobs from "./components/Jobs";
-import ListJobs from "./components/ListJobs";
+import ApplyForJob from "./components/ApplyForJob";
 
 function App() {
   return (
     <div className="bg-white min-h-[100vh]">
-      <Sidebar />
       <Routes>
         <Route path="/home" element={<Layout />}>
           <Route index element={<Home />} />
