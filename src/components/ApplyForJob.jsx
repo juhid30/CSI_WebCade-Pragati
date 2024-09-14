@@ -50,9 +50,13 @@ const ApplyForJob = ({ setRating }) => {
       resumeFormData.append("file", resumeBlob, "resume.pdf"); // Add the blob as a file with a name
 
       // Upload the resume
-      const resumeResponse = await axios.post("/upload", resumeFormData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const resumeResponse = await axios.post(
+        "http://localhost:5000/upload",
+        resumeFormData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
 
       if (resumeResponse.status !== 200) {
         throw new Error("Failed to upload resume.");
@@ -62,7 +66,7 @@ const ApplyForJob = ({ setRating }) => {
 
       // Upload the text content
       const textResponse = await axios.post(
-        "/upload_text",
+        "http://localhost:5000/upload_text",
         {
           input_text: textContent,
         },
