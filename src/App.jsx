@@ -16,7 +16,9 @@ import FeaturesSection from "./components/FeaturesSection";
 import EmployerSection from "./components/employers";
 import CTASection from "./components/calltoAction";
 gsap.registerPlugin(CSSPlugin);
-
+import JobListingPage from "./components/JobListing";
+import BinningBoard from "./components/BinningBoard";
+import WebCam from "./components/100ms/Webcam";
 function App() {
   const [counter, setCounter] = useState(0);
   const [user, setUser] = useState();
