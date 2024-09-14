@@ -63,7 +63,10 @@ const ResumeUpload = ({ studentId }) => {
       );
 
       if (response.status === 200) {
-        console.log("Response from /upload:", response.data);
+        console.log(
+          "Response from /upload:",
+          response.data.response.resume_evaluation
+        );
 
         // Proceed to upload the resume to Firebase Storage
         const storageRef = ref(storage, `resumes/${studentDocId}.pdf`);
@@ -85,7 +88,7 @@ const ResumeUpload = ({ studentId }) => {
               const studentDocRef = doc(db, "studentData", studentDocId);
               await updateDoc(studentDocRef, {
                 resume: url,
-                responseData: response.data,
+                responseData: response.data.response.resume_evaluation,
               });
 
               console.log(
