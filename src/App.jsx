@@ -7,8 +7,9 @@ import Home from "./pages/home";
 import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
 import logo from "./assets/logo.png";
+import WebCam from "./components/100ms/Webcam";
+import logo from "./assets/logo.png";
 import CalendarC from "../src/components/Calendar";
-
 import styled from "styled-components";
 import { gsap, CSSPlugin, Expo } from "gsap";
 import Layout from "./components/layout";
@@ -19,7 +20,10 @@ import CTASection from "./components/calltoAction";
 import Jobs from "./components/Jobs";
 import ListJobs from "./components/ListJobs";
 import AppliedToRecruiter from "./components/AppliedToRecruiter";
-import Profile from "./pages/profile";
+gsap.registerPlugin(CSSPlugin);
+import JobListingPage from "./components/JobListing";
+import BinningBoard from "./components/BinningBoard";
+import SuggestionsModal from "./components/SuggestionsModal";
 gsap.registerPlugin(CSSPlugin);
 
 function App() {
@@ -116,18 +120,16 @@ function App() {
           <Route index element={<DataCP />} />
         </Route>
         <Route path="/login" element={<Login setUser={setUser} />} />
-        <Route path="/upload-resume" element={<Layout />}>
-          <Route index element={<Profile />} />
-        </Route>
-        <Route path="/calendar" element={<Layout />}>
-          <Route index element={<CalendarC />} />
-        </Route>
-        <Route path="/jobs" element={<Layout />}>
-          <Route index element={<Jobs />} />
-        </Route>
-        <Route path="/listjobs" element={<Layout />}>
-          <Route index element={<ListJobs />} />
-        </Route>
+        {/* <Route path="/apply" element={<ApplyForJob />} /> */}
+        <Route
+          path="/upload-resume"
+          element={<ResumeUpload studentId={"fKDUga9FWQtsXwVGd67u"} />}
+        />
+        <Route path="/binning" element={<BinningBoard />} />
+        <Route path="/sugg" element={<SuggestionsModal />} />
+        <Route path="/meet" element={<WebCam />} />
+        <Route path="/calendar" element={<CalendarC />} />
+        <Route path="/jobs" element={<Jobs />} />
       </Routes>
     </>
   );
