@@ -1,4 +1,6 @@
-import "./assets/logo.svg";
+import { useState, useRef } from "react";
+// import "./assets/logo.svg";
+import viteLogo from "/vite.svg";
 import "./index.css"; // Import tailwind styles
 import { Route, Routes, Navigate } from "react-router-dom";
 
