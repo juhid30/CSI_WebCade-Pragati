@@ -35,7 +35,7 @@ export default function CardsIntrest() {
           <div className="modal-box p-0   w-[100vw]   bg-white scrollbar-hide">
             <div className="modal-action block ">
               {card.name === "WebDev" ? <ChatBotW /> : <ChatBotP />}
-              <form method="dialog">
+              <form method="dialog z-50">
                 {/* if there is a button in form, it will close the modal */}
                 <button className="btn">Close</button>
               </form>
