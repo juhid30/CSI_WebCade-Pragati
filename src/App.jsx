@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import "./assets/logo.svg";
+// import "./assets/logo.svg";
 import viteLogo from "/vite.svg";
 import "./index.css"; // Import tailwind styles
 import { LocomotiveScrollProvider } from "react-locomotive-scroll";
@@ -10,10 +10,11 @@ import ListJobs from "./components/ListJobs";
 import Navbar from "./components/Navbar";
 
 function App() {
+  const containerRef = useRef(null);
   return(
     <>
-      <Navbar/>
-      <Login />
+    {/* <Login/> */}
+    <Navbar/>
     </>
   );
 }
