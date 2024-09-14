@@ -6,10 +6,9 @@ import Login from "./components/Login";
 import Home from "./pages/home";
 import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
+import WebCam from "./components/100ms/Webcam";
 import logo from "./assets/logo.png";
-import WebCam from "./components/100ms/Webcam";import logo from "./assets/logo.png";
-import CalendarC from "../src/components/Calendar"
-import logo from "./assets/logo.png";
+import CalendarC from "../src/components/Calendar";
 
 import styled from "styled-components";
 import { gsap, CSSPlugin, Expo } from "gsap";
@@ -117,10 +116,7 @@ function App() {
         </Route>
         <Route path="/login" element={<Login setUser={setUser} />} />
         {/* <Route path="/apply" element={<ApplyForJob />} /> */}
-        <Route
-          path="/upload-resume"
-          element={<ResumeUpload studentId={"fKDUga9FWQtsXwVGd67u"} />}
-        />
+        <Route path="/resume-upload" element={<ResumeUpload />} />
         <Route path="/binning" element={<BinningBoard />} />
         <Route path="/sugg" element={<SuggestionsModal />} />
         <Route path="/meet" element={<WebCam />} />

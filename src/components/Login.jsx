@@ -18,7 +18,6 @@ const Login = ({ setUser }) => {
       const user = result.user;
 
       if (role === "Student") {
-        // Student login logic
         const studentQuery = query(
           collection(db, "studentData"),
           where("email", "==", user.email)
@@ -26,20 +25,30 @@ const Login = ({ setUser }) => {
         const studentQuerySnapshot = await getDocs(studentQuery);
 
         if (!studentQuerySnapshot.empty) {
-          // Student exists
           const docId = studentQuerySnapshot.docs[0].id;
-          console.log("Student DocID: ", docId);
           localStorage.setItem("studentDocId", docId);
           localStorage.setItem("studentRole", role);
-          navigate("/home");
           setUser(user);
+          navigate("/home"); // You can replace "/home" with another path if needed
         } else {
-          // Student doesn't exist, ask for resume upload
+          // Create new student document if not found
+          const newStudent = await addDoc(collection(db, "studentData"), {
+            uid: user.uid,
+            email: user.email,
+            name: user.displayName,
+            role: "Student",
+            resume: "", // Optionally leave resume blank for now
+            createdAt: new Date(),
+          });
+
+          // Store the newly created document's ID in localStorage
+          localStorage.setItem("studentDocId", newStudent.id);
+          localStorage.setItem("studentRole", role);
+
           setUser(user);
-          setShowModal(true);
+          navigate("/resume-upload"); // Redirect to resume upload page
         }
       } else if (role === "Recruiter") {
-        // Recruiter login logic
         const recruiterQuery = query(
           collection(db, "recruiterData"),
           where("email", "==", user.email)
@@ -47,23 +56,20 @@ const Login = ({ setUser }) => {
         const recruiterQuerySnapshot = await getDocs(recruiterQuery);
 
         if (!recruiterQuerySnapshot.empty) {
-          // Recruiter exists
           const docId = recruiterQuerySnapshot.docs[0].id;
-          console.log("Recruiter DocID: ", docId);
           localStorage.setItem("recruiterDocId", docId);
           setUser(user);
+          navigate("/home");
         } else {
-          // Recruiter doesn't exist, create a new recruiter document
           const newRecruiter = await addDoc(collection(db, "recruiterData"), {
             email: user.email,
             name: user.displayName,
             companyName: "",
             jobsIdsPosted: [],
           });
-          console.log("New Recruiter created with DocID: ", newRecruiter.id);
           localStorage.setItem("recruiterDocId", newRecruiter.id);
-          localStorage.setItem("studentRole", role);
           setUser(user);
+          navigate("/resume-upload"); // Redirect for recruiters too if needed
         }
       }
     } catch (error) {
@@ -88,7 +94,6 @@ const Login = ({ setUser }) => {
         console.error("Error uploading resume: ", error);
       }
     }
-    
   };
 
   return (
@@ -176,8 +181,6 @@ const Login = ({ setUser }) => {
           </p>
         </div>
       </div>
-
-      {/* Modal for resume upload */}
     </div>
   );
 };
