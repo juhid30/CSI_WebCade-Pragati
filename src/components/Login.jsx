@@ -1,95 +1,190 @@
-// src/components/Login.js
+import { useState } from "react";
 import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from "../../firebase.js";
+import { auth, provider, db } from "../../firebase.js";
 import { FaGoogle } from "react-icons/fa";
+import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
 
 const Login = ({ setUser }) => {
+  const [showModal, setShowModal] = useState(false); // Modal state
+  const [resume, setResume] = useState(null); // File upload state
+  const [role, setRole] = useState("Student"); // Role state
+
   const signInWithGoogle = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
-      setUser(result.user);
+      const user = result.user;
+
+      if (role === "Student") {
+        // Student login logic
+        const studentQuery = query(
+          collection(db, "studentData"),
+          where("email", "==", user.email)
+        );
+        const studentQuerySnapshot = await getDocs(studentQuery);
+
+        if (!studentQuerySnapshot.empty) {
+          // Student exists
+          const docId = studentQuerySnapshot.docs[0].id;
+          console.log("Student DocID: ", docId);
+          localStorage.setItem("studentDocId", docId);
+          setUser(user);
+        } else {
+          // Student doesn't exist, ask for resume upload
+          setUser(user);
+          setShowModal(true);
+        }
+      } else if (role === "Recruiter") {
+        // Recruiter login logic
+        const recruiterQuery = query(
+          collection(db, "recruiterData"),
+          where("email", "==", user.email)
+        );
+        const recruiterQuerySnapshot = await getDocs(recruiterQuery);
+
+        if (!recruiterQuerySnapshot.empty) {
+          // Recruiter exists
+          const docId = recruiterQuerySnapshot.docs[0].id;
+          console.log("Recruiter DocID: ", docId);
+          localStorage.setItem("recruiterDocId", docId);
+          setUser(user);
+        } else {
+          // Recruiter doesn't exist, create a new recruiter document
+          const newRecruiter = await addDoc(collection(db, "recruiterData"), {
+            email: user.email,
+            name: user.displayName,
+            companyName: "",
+            jobsIdsPosted: [],
+          });
+          console.log("New Recruiter created with DocID: ", newRecruiter.id);
+          localStorage.setItem("recruiterDocId", newRecruiter.id);
+          setUser(user);
+        }
+      }
     } catch (error) {
       console.error("Error signing in: ", error);
     }
   };
 
-  return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="flex flex-col items-center p-6 mx-auto py-auto min-w-lg bg-purple-200 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-4">Sign In</h2>
+  const handleResumeUpload = async (e) => {
+    e.preventDefault();
+    if (resume && auth.currentUser) {
+      try {
+        const newStudent = await addDoc(collection(db, "studentData"), {
+          email: auth.currentUser.email,
+          name: auth.currentUser.displayName,
+          resume: resume.name,
+        });
 
+        console.log("New Student created with DocID: ", newStudent.id);
+        localStorage.setItem("studentDocId", newStudent.id);
+        setShowModal(false);
+      } catch (error) {
+        console.error("Error uploading resume: ", error);
+      }
+    }
+  };
+
+  return (
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+      <div className="flex flex-col items-center p-8 bg-white rounded-lg shadow-md max-w-md w-full">
+        <h2 className="text-2xl font-semibold text-gray-700 mb-6">Sign In</h2>
+
+        {/* Role Switch */}
+        <div className="flex items-center justify-center mb-6">
+          <button
+            className={`px-4 py-2 rounded-l-full transition duration-300 ${
+              role === "Student"
+                ? "bg-black text-white"
+                : "bg-gray-300 text-black"
+            }`}
+            onClick={() => setRole("Student")}
+          >
+            Student
+          </button>
+          <button
+            className={`px-4 py-2 rounded-r-full transition duration-300 ${
+              role === "Recruiter"
+                ? "bg-black text-white"
+                : "bg-gray-300 text-black"
+            }`}
+            onClick={() => setRole("Recruiter")}
+          >
+            Recruiter
+          </button>
+        </div>
+
+        {/* Email Input */}
         <input
-          className="w-full p-3 mb-4 border border-gray-300 rounded-lg"
+          className="w-full p-3 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
           type="email"
           placeholder="Email address"
         />
+
+        {/* Password Input */}
         <input
-          className="w-full p-3 mb-4 border border-gray-300 rounded-lg"
+          className="w-full p-3 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-400"
           type="password"
           placeholder="Password"
         />
 
-        <div className="flex justify-between items-center w-full mb-4">
-          <label className="flex items-center">
+        {/* Remember Me & Forgot Password */}
+        <div className="flex justify-between items-center w-full mb-6">
+          <label className="flex items-center text-sm text-gray-600">
             <input type="checkbox" className="mr-2" />
             Remember me
           </label>
-          <a href="#!" className="text-blue-500">
+          <a href="#!" className="text-sm text-gray-500 hover:underline">
             Forgot password?
           </a>
         </div>
+
+        {/* Sign in with Google */}
         <button
-          className="w-full py-3  bg-blue-500 text-white rounded-lg"
+          className="w-full py-2 mb-4 flex justify-center items-center bg-gray-800 text-white rounded-md hover:bg-gray-900 transition duration-300"
           onClick={signInWithGoogle}
         >
+          <FaGoogle className="mr-3 h-5 w-5" />
           Sign in with Google
         </button>
 
-        <button className="w-full py-3 mb-4  text-black rounded-lg">
+        {/* Regular Sign in */}
+        <button className="w-full py-2 mb-4 bg-gray-700 text-white rounded-md hover:bg-gray-800 transition duration-300">
           Sign in
         </button>
 
-        <div className="text-center">
-          <p className="mb-2">
+        {/* Register & Social Sign-up */}
+        <div className="text-center w-full">
+          <p className="text-sm text-gray-600 mb-2">
             Not a member?{" "}
-            <a href="#!" className="text-blue-500">
+            <a href="#!" className="text-gray-700 hover:underline">
               Register
             </a>
           </p>
-          <p className="mb-4">or sign up with:</p>
-
-          {/* <div className="flex justify-around">
-            <button
-              className="p-2 text-blue-600 hover:bg-blue-100 rounded-full"
-              aria-label="Sign in with Facebook"
-            >
-              <i className="fab fa-facebook-f"></i>
-            </button>
-
-            <button
-              className="p-2 text-blue-400 hover:bg-blue-100 rounded-full"
-              aria-label="Sign in with Twitter"
-            >
-              
-            </button>
-
-            <button
-              className="p-2 text-red-500 hover:bg-red-100 rounded-full"
-              aria-label="Sign in with Google"
-              onClick={signInWithGoogle}
-            >
-              <FaGoogle className="h-8 w-8" />
-            </button>
-
-            <button
-              className="p-2 text-gray-800 hover:bg-gray-100 rounded-full"
-              aria-label="Sign in with GitHub"
-            >
-              <i className="fab fa-github"></i>
-            </button>
-          </div> */}
         </div>
       </div>
+
+      {/* Modal for resume upload */}
+      {showModal && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+            <h3 className="text-lg font-semibold mb-4">Upload Your Resume</h3>
+            <form onSubmit={handleResumeUpload}>
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx"
+                onChange={(e) => setResume(e.target.files[0])}
+                className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+              />
+              <button
+                type="submit"
+                className="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300"
+              >
+                Upload Resume
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
