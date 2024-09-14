@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Home from "./pages/home";
 import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
+import logo from "./assets/logo.png";
 import CalendarC from "../src/components/Calendar"
 import styled from "styled-components";
 import CodingPlatform from "../src/components/CodingPlatform"
@@ -19,9 +20,12 @@ import Jobs from "./components/Jobs";
 import ListJobs from "./components/ListJobs";
 import AppliedToRecruiter from "./components/AppliedToRecruiter";
 gsap.registerPlugin(CSSPlugin);
-
+import JobListingPage from "./components/JobListing";
+import BinningBoard from "./components/BinningBoard";
+import WebCam from "./components/100ms/Webcam";
 function App() {
   const [counter, setCounter] = useState(0);
+  const [user, setUser] = useState();
 
   useEffect(() => {
     const count = setInterval(() => {
@@ -81,8 +85,17 @@ function App() {
                   {counter}%
                 </Count>
               </Loading>
-              <Content className="content">
-                <div className="bg-white text-black">
+              <Content className="content w-full">
+                <div className="bg-white text-black w-full">
+                  <nav>
+                    <div className="flex flex-shrink-0 items-center">
+                      <img
+                        src={logo}
+                        alt="Logo"
+                        className="block h-12 w-auto"
+                      />
+                    </div>
+                  </nav>
                   <HeroSection />
                   <FeaturesSection />
                   <EmployerSection />
@@ -98,7 +111,7 @@ function App() {
         <Route path="/datacp" element={<Layout />}>
           <Route index element={<DataCP />} />
         </Route>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setUser={setUser} />} />
         {/* <Route path="/apply" element={<ApplyForJob />} /> */}
         <Route
           path="/upload-resume"

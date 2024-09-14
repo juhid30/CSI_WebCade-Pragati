@@ -1,0 +1,56 @@
+/* Set the flex properties for meetuipage */
+.meetuipage {
+  display: flex;
+  flex-direction: row;
+  width: 100vw; /* Full width of viewport */
+  height: 100vh; /* Full height of viewport */
+}
+
+/* Bablu will take up 80% of the width */
+.bablu {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+/* Chat3 will take up 20% of the width */
+.chat3 {
+  width: 20%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Linkdiv styling */
+.linkdiv {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.visit-link {
+  display: block;
+  margin-bottom: 20px;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.visit-link:hover {
+  color: #0056b3;
+}
+
+.play-now-btn {
+  background-color: #5865f2;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.play-now-btn:hover {
+  background-color: #3a46c4;
+}
