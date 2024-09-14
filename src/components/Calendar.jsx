@@ -23,17 +23,15 @@ function CalendarC() {
 export default CalendarC;
 
 function CalendarComponent() {
-
-//   let user = JSON.parse(localStorage.getItem('user'));
-//   console.log(user)
-//   let events = user.testData;
-//   console.log(events)
-
-    const events = {
-        "title": "Math Exam",
-        "start": "2024-09-04T15:00:00",
-        "end": "2024-09-04T17:20:00"
-      }
+  // Define a temporary event
+  const events = [
+    {
+      id: '1',
+      title: 'Sample Event',
+      start: '2024-09-15T10:00:00', // Start time of the event
+      end: '2024-09-15T12:00:00'    // End time of the event
+    }
+  ];
 
   return (
     <div className="w-[100%]">
@@ -41,15 +39,12 @@ function CalendarComponent() {
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView={"dayGridMonth"}
         headerToolbar={{
-          start: "today prev,next", // will normally be on the left. if RTL, will be on the right
+          start: "today prev,next",
           center: "title",
-          end: "dayGridMonth,timeGridWeek,timeGridDay", // will normally be on the right. if RTL, will be on the left
+          end: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
         height={"100%"}
-        widt
         events={events}
-
-      
       />
     </div>
   );
