@@ -5,9 +5,10 @@ import "./index.css"; // Import tailwind styles
 
 import "./App.css";
 import Login from "./components/Login";
+import CalendarC from "./components/Calendar";
 
 function App() {
-  return <Login />;
+  return <CalendarC />;
 }
 
 export default App;
