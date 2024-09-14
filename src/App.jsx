@@ -8,6 +8,8 @@ import "./App.css";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import CardsIntrest from "./components/CardsIntrest";
+import CodingPlatform from "../src/components/CodingPlatform"
+import CalenderC from "../src/components/Calendar"
 import Home from "./pages/home";
 
 function App() {
@@ -16,6 +18,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/coding" element={<CodingPlatform />} />
+        <Route path="/calendar" element={<CalenderC />} />
+
       </Routes>
     </div>
   );
