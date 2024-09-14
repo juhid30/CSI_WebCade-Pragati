@@ -6,14 +6,18 @@ import Login from "./components/Login";
 import Home from "./pages/home";
 import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
-
+import CalendarC from "../src/components/Calendar"
 import styled from "styled-components";
+import CodingPlatform from "../src/components/CodingPlatform"
 import { gsap, CSSPlugin, Expo } from "gsap";
 import Layout from "./components/layout";
 import HeroSection from "./components/Hero";
 import FeaturesSection from "./components/FeaturesSection";
 import EmployerSection from "./components/employers";
 import CTASection from "./components/calltoAction";
+import Jobs from "./components/Jobs";
+import ListJobs from "./components/ListJobs";
+import AppliedToRecruiter from "./components/AppliedToRecruiter";
 gsap.registerPlugin(CSSPlugin);
 
 function App() {
@@ -99,6 +103,26 @@ function App() {
         <Route
           path="/upload-resume"
           element={<ResumeUpload studentId={"fKDUga9FWQtsXwVGd67u"} />}
+        />
+        <Route
+          path="/jobs"
+          element={<Jobs/>}
+        />
+        <Route
+          path="/create-job"
+          element={<ListJobs/>}
+        />
+        <Route
+          path="/applied-jobs-schedule"
+          element={<AppliedToRecruiter/>}
+        />
+        <Route
+          path="/coding"
+          element={<CodingPlatform/>}
+        />
+         <Route
+          path="/calendar"
+          element={<CalendarC/>}
         />
       </Routes>
     </>
