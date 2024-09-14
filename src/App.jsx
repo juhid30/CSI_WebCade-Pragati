@@ -8,7 +8,6 @@ import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
 import logo from "./assets/logo.png";
 import CalendarC from "../src/components/Calendar"
-import logo from "./assets/logo.png";
 
 import styled from "styled-components";
 import { gsap, CSSPlugin, Expo } from "gsap";
