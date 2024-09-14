@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Chart_fill from "../assets/Chart_fill.png"
-const App = () => {
+
+const Sidebar = () => {
   const [open, setOpen] = useState(true);
   const Menus = [
     { title: "Dashboard", src: "Chart_fill" },
