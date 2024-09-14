@@ -8,7 +8,6 @@ import Home from "./pages/home";
 import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
 import Layout from "./components/layout";
-import ApplyForJob from "./components/ApplyForJob";
 
 function App() {
   return (
@@ -21,7 +20,7 @@ function App() {
           <Route index element={<DataCP />} />
         </Route>
         <Route path="/login" element={<Login />} />
-        <Route path="/apply" element={<ApplyForJob />} />
+        {/* <Route path="/apply" element={<ApplyForJob />} /> */}
         <Route
           path="/upload-resume"
           element={<ResumeUpload studentId={"fKDUga9FWQtsXwVGd67u"} />}
