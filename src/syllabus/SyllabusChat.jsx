@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import python from "./python.json";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
@@ -7,49 +7,37 @@ export default function ChatBotP() {
   const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
   const [selectedTopics, setSelectedTopics] = useState({});
   const [isFinalSlide, setIsFinalSlide] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [showModal, setShowModal] = useState(true);
   const [response, setResponse] = useState(null);
 
-  const API_KEY = "AIzaSyBxm7zzP55l_Aoqgb3I7LF-YJDURFApzrw";
+  const API_KEY = "AIzaSyBBp8jEQ3zEJXLkSVgBpGHKr6q-EycIDSI"; // Replace this with your actual API key
   const genAI = new GoogleGenerativeAI(API_KEY);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-  // Create a ref for the chat container
-  const chatContainerRef = useRef(null);
 
   const currentSubject = python.subjects[currentSubjectIndex];
   const currentChapter = currentSubject.chapters[currentChapterIndex];
 
-  // This useEffect will read the current chapter out loud when the chapter changes
   useEffect(() => {
     if (currentChapter) {
-      speakOutLoud(`Chapter: ${currentChapter.chapter}`);
-      addMessage({
-        role: "bot",
-        text: `Current Chapter: ${currentChapter.chapter}. Please select the topics you've covered if you wish to.`,
-      });
+      const message = ` Chapter: ${currentChapter.chapter}. Please select the topics you've covered.`;
+      speakOutLoud(message); // Make the bot speak the current chapter and instruction
     } else {
-      addMessage({
-        role: "bot",
-        text: `Please select the topics you have covered in ${currentSubject.subject}.`,
-      });
+      const message = `Please select the topics you have covered in ${currentSubject.subject}.`;
+      speakOutLoud(message); // Make the bot speak the question about covered topics
     }
   }, [currentChapter, currentSubject.subject]);
 
-  // useEffect to scroll to the bottom whenever messages are updated
-  useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
-    }
-  }, [messages]);
-
-  // Function to add messages to chat history
   const addMessage = (message) => {
-    setMessages((prevMessages) => [...prevMessages, message]);
+    console.log(message.text);
+    // Optionally, you can add messages to a state if you're displaying them in the UI
   };
 
-  // Function to handle topic selection via checkboxes
+  // Function to speak out text
+  const speakOutLoud = (text) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(utterance);
+  };
+
   const handleTopicChange = (topic) => {
     const key = `${currentSubject.subject}_${currentChapter.chapter}`;
     const newSelectedTopics = {
@@ -60,13 +48,8 @@ export default function ChatBotP() {
       },
     };
     setSelectedTopics(newSelectedTopics);
-
-    if (newSelectedTopics[key][topic]) {
-      addMessage({ role: "user", text: `You selected the topic: ${topic}` });
-    }
   };
 
-  // Function to handle the "Next" button action
   const handleNext = () => {
     const totalChapters = currentSubject.chapters.length;
     const totalSubjects = python.subjects.length;
@@ -78,14 +61,9 @@ export default function ChatBotP() {
       setCurrentChapterIndex(0);
     } else {
       setIsFinalSlide(true);
-      addMessage({
-        role: "bot",
-        text: "You have completed all subjects and chapters.",
-      });
     }
   };
 
-  // Function to handle the "Done" button action
   const handleDone = async () => {
     const result = python.subjects.map((subject) => ({
       subject: subject.subject,
@@ -105,6 +83,7 @@ export default function ChatBotP() {
       role: "bot",
       text: "You have completed the syllabus.",
     });
+    speakOutLoud("You have completed the syllabus."); // Speak the completion message
     console.log(jsonString);
 
     const refinedPrompt = `
@@ -132,34 +111,25 @@ The "routine" section should include a title and a start/end time like this exam
       const response = result.response;
       const text = await response.text(); // Get the response text
 
-      // Attempt to extract only the valid JSON from the response
       const jsonStart = text.indexOf("{"); // Find the start of the JSON block
       const jsonEnd = text.lastIndexOf("}"); // Find the end of the JSON block
 
       if (jsonStart !== -1 && jsonEnd !== -1) {
-        // Extract the potential JSON portion
         const jsonString = text.substring(jsonStart, jsonEnd + 1);
-
-        // Parse the extracted JSON string
         const jsonResponse = JSON.parse(jsonString);
 
-        // Transform the structure of jsonResponse to the required format
-        if (jsonResponse && Array.isArray(jsonResponse)) {
-          jsonResponse.routine = jsonResponse.routine.map((item) => {
-            const title = item.subject || "Math Exam"; // Use the subject or default title
-            const start = "2024-09-04T15:00:00"; // Static or dynamically generated start time
-            const end = "2024-09-04T17:20:00"; // Static or dynamically generated end time
+        setResponse(jsonResponse.routine);
 
-            return {
-              title,
-              start,
-              end,
-            };
-          });
-        }
-
-        setResponse(jsonResponse);
-
+        const responseMessage = `AI Response: ${JSON.stringify(
+          jsonResponse,
+          null,
+          2
+        )}`;
+        addMessage({
+          role: "bot",
+          text: responseMessage,
+        });
+        speakOutLoud(responseMessage); // Speak the AI response
         console.log(jsonResponse);
       } else {
         throw new Error("JSON block not found in the response.");
@@ -170,35 +140,21 @@ The "routine" section should include a title and a start/end time like this exam
     }
   };
 
-  // Function to speak out text
-  const speakOutLoud = (text) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    window.speechSynthesis.speak(utterance);
-  };
-
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-      <div className="flex-grow overflow-y-auto p-0" ref={chatContainerRef}>
-        <div className="bg-white shadow-lg rounded-lg p-4 h-full scrollbar-hide overflow-y-scroll">
-          {messages.map((msg, index) => (
-            <div
-              key={index}
-              className={`mb-4 p-2 w-fit rounded-lg ${
-                msg.role === "bot"
-                  ? "bg-blue-100 text-left mr-auto" // Bot messages aligned to the left
-                  : "bg-green-100 text-right ml-auto" // User messages aligned to the right
-              }`}
-            >
-              <p className="text-gray-800">{msg.text}</p>
-            </div>
-          ))}
+    <div className="flex flex-col h-[70vh] bg-gray-100">
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 h-fit text-black flex items-center justify-center z-50">
+          <div className="w-full max-w-lg bg-white shadow-lg rounded-t-lg p-4">
+            <h2 className="text-2xl  font-bold mb-4">
+              {currentSubject.subject}
+            </h2>
+            <h3 className="text-xl font-semibold mb-2">
+              Chapter: {currentChapter.chapter}
+            </h3>
 
-          {/* Display checkboxes for selecting topics if current chapter exists */}
-          {currentChapter && (
-            <div className="mt-4 w-fit mr-auto bg-blue-300 rounded-lg p-3">
-              <h3 className="text-lg font-semibold text-gray-700">
-                Select topics from {currentChapter.chapter}
-              </h3>
+            <div className="w-full bg-blue-100 rounded-lg p-3">
+              <h4 className="text-lg font-semibold">Select topics:</h4>
               <form className="mt-2">
                 {currentChapter.topics.map((topic, index) => (
                   <label key={index} className="block mb-2">
@@ -217,29 +173,28 @@ The "routine" section should include a title and a start/end time like this exam
                 ))}
               </form>
             </div>
-          )}
-        </div>
-      </div>
 
-      <div className="bg-white p-4 border-t border-gray-200">
-        <div className="flex justify-between">
-          {!isFinalSlide ? (
-            <button
-              onClick={handleNext}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
-            >
-              Next
-            </button>
-          ) : (
-            <button
-              onClick={handleDone}
-              className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-            >
-              Done
-            </button>
-          )}
+            {/* Buttons */}
+            <div className="mt-4 flex justify-between">
+              {!isFinalSlide ? (
+                <button
+                  onClick={handleNext}
+                  className="bg-blue-500 bg-purple text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                >
+                  Next
+                </button>
+              ) : (
+                <button
+                  onClick={handleDone}
+                  className="bg-green-500 bg-purple text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                >
+                  Done
+                </button>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
