@@ -8,7 +8,8 @@ import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
 import logo from "./assets/logo.png";
 import WebCam from "./components/100ms/Webcam";
-import CalendarC from "../src/components/Calendar"
+import logo from "./assets/logo.png";
+import CalendarC from "../src/components/Calendar";
 import styled from "styled-components";
 import { gsap, CSSPlugin, Expo } from "gsap";
 import Layout from "./components/layout";
@@ -28,6 +29,13 @@ gsap.registerPlugin(CSSPlugin);
 function App() {
   const [counter, setCounter] = useState(0);
   const [user, setUser] = useState();
+  const [role, setRole] = useState();
+  useEffect(() => {
+    const type = localStorage.getItem("studentRole");
+    setRole(type);
+  }, []);
+
+  console.log(role);
 
   useEffect(() => {
     const count = setInterval(() => {
@@ -107,9 +115,7 @@ function App() {
             </>
           }
         />
-        <Route path="/home" element={<Layout />}>
-          <Route index element={<Home />} />
-        </Route>
+
         <Route path="/datacp" element={<Layout />}>
           <Route index element={<DataCP />} />
         </Route>
@@ -122,14 +128,8 @@ function App() {
         <Route path="/binning" element={<BinningBoard />} />
         <Route path="/sugg" element={<SuggestionsModal />} />
         <Route path="/meet" element={<WebCam />} />
-        <Route
-          path="/calendar"
-          element={<CalendarC />}
-        />
-        <Route
-          path="/jobs"
-          element={<Jobs />}
-        />
+        <Route path="/calendar" element={<CalendarC />} />
+        <Route path="/jobs" element={<Jobs />} />
       </Routes>
     </>
   );
