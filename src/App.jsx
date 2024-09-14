@@ -9,6 +9,8 @@ import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import CardsIntrest from "./components/CardsIntrest";
 import Home from "./pages/home";
+import ResumeUpload from "./components/ResumeUpload";
+import ApplyForJob from "./components/ApplyForJob";
 
 function App() {
   return (
@@ -16,6 +18,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/apply" element={<ApplyForJob />} />
+        <Route
+          path="/upload-resume"
+          element={<ResumeUpload studentId={"fKDUga9FWQtsXwVGd67u"} />}
+        />
       </Routes>
     </div>
   );
