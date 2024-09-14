@@ -8,8 +8,9 @@ import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
 import logo from "./assets/logo.png";
 import CalendarC from "../src/components/Calendar"
+import logo from "./assets/logo.png";
+
 import styled from "styled-components";
-import CodingPlatform from "../src/components/CodingPlatform"
 import { gsap, CSSPlugin, Expo } from "gsap";
 import Layout from "./components/layout";
 import HeroSection from "./components/Hero";
@@ -116,26 +117,6 @@ function App() {
         <Route
           path="/upload-resume"
           element={<ResumeUpload studentId={"fKDUga9FWQtsXwVGd67u"} />}
-        />
-        <Route
-          path="/jobs"
-          element={<Jobs/>}
-        />
-        <Route
-          path="/create-job"
-          element={<ListJobs/>}
-        />
-        <Route
-          path="/applied-jobs-schedule"
-          element={<AppliedToRecruiter/>}
-        />
-        <Route
-          path="/coding"
-          element={<CodingPlatform/>}
-        />
-         <Route
-          path="/calendar"
-          element={<CalendarC/>}
         />
       </Routes>
     </>
