@@ -3,6 +3,7 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, provider, db } from "../../firebase.js";
 import { FaGoogle } from "react-icons/fa";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import ResumeUpload from "./ResumeUpload.jsx";
 
 const Login = ({ setUser }) => {
   const [showModal, setShowModal] = useState(false); // Modal state
@@ -86,6 +87,13 @@ const Login = ({ setUser }) => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
+      {showModal && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full h-[70vh]">
+            <ResumeUpload />
+          </div>
+        </div>
+      )}
       <div className="flex flex-col items-center p-8 bg-white rounded-lg shadow-md max-w-md w-full">
         <h2 className="text-2xl font-semibold text-gray-700 mb-6">Sign In</h2>
 
@@ -164,27 +172,6 @@ const Login = ({ setUser }) => {
       </div>
 
       {/* Modal for resume upload */}
-      {showModal && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
-            <h3 className="text-lg font-semibold mb-4">Upload Your Resume</h3>
-            <form onSubmit={handleResumeUpload}>
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx"
-                onChange={(e) => setResume(e.target.files[0])}
-                className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-              />
-              <button
-                type="submit"
-                className="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300"
-              >
-                Upload Resume
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

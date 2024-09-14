@@ -6,7 +6,8 @@ import Login from "./components/Login";
 import Home from "./pages/home";
 import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
-
+import logo from "./assets/logo.png";
+import WebCam from "./components/100ms/Webcam";
 import styled from "styled-components";
 import { gsap, CSSPlugin, Expo } from "gsap";
 import Layout from "./components/layout";
@@ -14,13 +15,13 @@ import HeroSection from "./components/Hero";
 import FeaturesSection from "./components/FeaturesSection";
 import EmployerSection from "./components/employers";
 import CTASection from "./components/calltoAction";
-gsap.registerPlugin(CSSPlugin);
-import JobListingPage from "./components/JobListing";
 import BinningBoard from "./components/BinningBoard";
-import WebCam from "./components/100ms/Webcam";
+import SuggestionsModal from "./components/SuggestionsModal";
+gsap.registerPlugin(CSSPlugin);
+
 function App() {
   const [counter, setCounter] = useState(0);
-
+  const [user, setUser] = useState("");
   useEffect(() => {
     const count = setInterval(() => {
       setCounter((counter) =>
@@ -79,8 +80,17 @@ function App() {
                   {counter}%
                 </Count>
               </Loading>
-              <Content className="content">
-                <div className="bg-white text-black">
+              <Content className="content w-full">
+                <div className="bg-white text-black w-full">
+                  <nav>
+                    <div className="flex flex-shrink-0 items-center">
+                      <img
+                        src={logo}
+                        alt="Logo"
+                        className="block h-12 w-auto"
+                      />
+                    </div>
+                  </nav>
                   <HeroSection />
                   <FeaturesSection />
                   <EmployerSection />
@@ -96,12 +106,15 @@ function App() {
         <Route path="/datacp" element={<Layout />}>
           <Route index element={<DataCP />} />
         </Route>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setUser={setUser} />} />
         {/* <Route path="/apply" element={<ApplyForJob />} /> */}
         <Route
           path="/upload-resume"
           element={<ResumeUpload studentId={"fKDUga9FWQtsXwVGd67u"} />}
         />
+        <Route path="/binning" element={<BinningBoard />} />
+        <Route path="/sugg" element={<SuggestionsModal />} />
+        <Route path="/meet" element={<WebCam />} />
       </Routes>
     </>
   );
