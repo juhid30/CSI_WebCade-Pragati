@@ -1,26 +1,23 @@
 import { useState, useRef } from "react";
-import "./assets/logo.svg";
+// import "./assets/logo.svg";
 import viteLogo from "/vite.svg";
 import "./index.css"; // Import tailwind styles
-import { LocomotiveScrollProvider } from "react-locomotive-scroll";
+import { Route, Routes, Navigate } from "react-router-dom";
 
 import "./App.css";
 import Login from "./components/Login";
-import ListJobs from "./components/ListJobs";
 import Navbar from "./components/Navbar";
-import BinningPage from "./components/BinningPage";
-import JobListingPage from "./components/JobListing";
-import Test from "./components/Test";
-import ApplyForJob from "./components/ApplyForJob";
+import CardsIntrest from "./components/CardsIntrest";
+import Home from "./pages/home";
 
 function App() {
   return (
-    <>
-      <ApplyForJob />
-      {/* <Test /> */}
-      {/* <JobListingPage /> */}
-      {/* <BinningPage /> */}
-    </>
+    <div className="bg-white min-h-[100vh]">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </div>
   );
 }
 
