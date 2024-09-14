@@ -7,7 +7,10 @@ import Home from "./pages/home";
 import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
 import logo from "./assets/logo.png";
-import WebCam from "./components/100ms/Webcam";
+import WebCam from "./components/100ms/Webcam";import logo from "./assets/logo.png";
+import CalendarC from "../src/components/Calendar"
+import logo from "./assets/logo.png";
+
 import styled from "styled-components";
 import { gsap, CSSPlugin, Expo } from "gsap";
 import Layout from "./components/layout";
@@ -15,13 +18,19 @@ import HeroSection from "./components/Hero";
 import FeaturesSection from "./components/FeaturesSection";
 import EmployerSection from "./components/employers";
 import CTASection from "./components/calltoAction";
+import Jobs from "./components/Jobs";
+import ListJobs from "./components/ListJobs";
+import AppliedToRecruiter from "./components/AppliedToRecruiter";
+gsap.registerPlugin(CSSPlugin);
+import JobListingPage from "./components/JobListing";
 import BinningBoard from "./components/BinningBoard";
 import SuggestionsModal from "./components/SuggestionsModal";
 gsap.registerPlugin(CSSPlugin);
 
 function App() {
   const [counter, setCounter] = useState(0);
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState();
+
   useEffect(() => {
     const count = setInterval(() => {
       setCounter((counter) =>

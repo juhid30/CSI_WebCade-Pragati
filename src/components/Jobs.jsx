@@ -1,8 +1,33 @@
 import React, { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import { db } from "../../firebase"; // Adjust the import path if necessary
 
 const Modal = ({ isOpen, onClose, job }) => {
+  const handleApply = async () => {
+    const studentId = localStorage.getItem("studentDocId");
+    const recruiterId = job.recruiterId; // Assuming the recruiter ID is stored in the job data
+
+    console.log(studentId , job.id , recruiterId)
+    if (!studentId || !job.id || !recruiterId) {
+      console.error("Missing necessary information to apply for the job.");
+      return;
+    }
+
+    const appliedJobData = {
+      studentId,
+      jobId: job.id,
+      recruiterId,
+      appliedAt: new Date(),
+    };
+
+    try {
+      await addDoc(collection(db, "appliedJobs"), appliedJobData);
+      alert("You have successfully applied for the job!");
+    } catch (error) {
+      console.error("Error applying for the job: ", error);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -16,9 +41,19 @@ const Modal = ({ isOpen, onClose, job }) => {
         <p className="mt-4"><strong>Qualifications:</strong> {job.qualifications}</p>
         <p className="mt-4"><strong>Responsibilities:</strong> {job.responsibilities}</p>
         <p className="mt-4"><strong>Benefits:</strong> {job.benefits}</p>
+
+        {/* Apply Button */}
+        <button
+          onClick={handleApply}
+          className="mt-6 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+        >
+          Apply for this Job
+        </button>
+
+        {/* Close Button */}
         <button
           onClick={onClose}
-          className="mt-6 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
           Close
         </button>
