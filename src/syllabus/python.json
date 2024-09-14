@@ -1,0 +1,97 @@
+{
+  "subjects": [
+    {
+      "subject": "Python Basics",
+      "chapters": [
+        {
+          "chapter": "Introduction to Python",
+          "topics": [
+            "History of Python",
+            "Features of Python",
+            "Installing Python"
+          ]
+        },
+        {
+          "chapter": "Variables and Data Types",
+          "topics": [
+            "Variables",
+            "Integers",
+            "Strings",
+            "Booleans",
+            "Lists",
+            "Tuples"
+          ]
+        },
+        {
+          "chapter": "Control Flow",
+          "topics": [
+            "If Statements",
+            "For Loops",
+            "While Loops",
+            "Break and Continue"
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "Advanced Python",
+      "chapters": [
+        {
+          "chapter": "Object-Oriented Programming",
+          "topics": [
+            "Classes and Objects",
+            "Inheritance",
+            "Polymorphism",
+            "Encapsulation"
+          ]
+        },
+        {
+          "chapter": "File Handling",
+          "topics": [
+            "Reading Files",
+            "Writing Files",
+            "File Methods",
+            "Context Managers"
+          ]
+        },
+        {
+          "chapter": "Modules and Packages",
+          "topics": [
+            "Importing Modules",
+            "Creating Modules",
+            "Using Packages",
+            "PIP"
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "Python for Data Science",
+      "chapters": [
+        {
+          "chapter": "NumPy",
+          "topics": [
+            "Creating Arrays",
+            "Array Operations",
+            "Indexing and Slicing",
+            "Broadcasting"
+          ]
+        },
+        {
+          "chapter": "Pandas",
+          "topics": [
+            "DataFrames",
+            "Series",
+            "Indexing",
+            "GroupBy",
+            "Merging and Joining"
+          ]
+        },
+        {
+          "chapter": "Matplotlib",
+          "topics": ["Basic Plots", "Customization", "Subplots", "Histograms"]
+        }
+      ]
+    }
+  ]
+}

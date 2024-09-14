@@ -8,13 +8,32 @@ import "./App.css";
 import Login from "./components/Login";
 import ListJobs from "./components/ListJobs";
 import Navbar from "./components/Navbar";
+import CardsIntrest from "./components/CardsIntrest";
+import BinningPage from "./components/BinningPage";
 
 function App() {
-  const containerRef = useRef(null);
-  return(
+  return (
     <>
-    {/* <Login/> */}
-    <Navbar/>
+      <Navbar />
+      <Login />
+      {/* Open the modal using document.getElementById('ID').showModal() method */}
+      <button
+        className="btn"
+        onClick={() => document.getElementById("cards_interest").showModal()}
+      >
+        Chat Bot
+      </button>
+      <dialog id="cards_interest" className="modal">
+        <div className="modal-box bg-white ">
+          <div className="modal-action block">
+            <CardsIntrest />
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </>
   );
 }

@@ -1,0 +1,63 @@
+{
+  "subjects": [
+    {
+      "subject": "Frontend Development",
+      "chapters": [
+        {
+          "chapter": "HTML Basics",
+          "topics": [
+            "HTML Elements and Tags",
+            "Forms and Inputs",
+            "Tables",
+            "Semantic HTML"
+          ]
+        },
+        {
+          "chapter": "CSS Fundamentals",
+          "topics": ["Selectors and Properties", "Box Model", "Flexbox", "Grid"]
+        }
+      ]
+    },
+    {
+      "subject": "Advanced Frontend",
+      "chapters": [
+        {
+          "chapter": "JavaScript ES6+",
+          "topics": [
+            "Arrow Functions",
+            "Promises and Async/Await",
+            "Classes",
+            "Modules"
+          ]
+        },
+        {
+          "chapter": "Frontend Frameworks",
+          "topics": [
+            "Introduction to React",
+            "React Components",
+            "State and Props",
+            "Hooks"
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "Backend Development",
+      "chapters": [
+        {
+          "chapter": "Node.js Basics",
+          "topics": [
+            "Introduction to Node.js",
+            "Express.js",
+            "Middleware",
+            "Routing"
+          ]
+        },
+        {
+          "chapter": "Databases",
+          "topics": ["SQL Basics", "NoSQL Databases", "MongoDB", "Mongoose"]
+        }
+      ]
+    }
+  ]
+}
