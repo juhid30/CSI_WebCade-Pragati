@@ -12,12 +12,12 @@ import Home from "./pages/home";
 
 function App() {
   return (
-    <>
+    <div className="bg-white min-h-[100vh]">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
       </Routes>
-    </>
+    </div>
   );
 }
 
