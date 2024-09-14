@@ -13,8 +13,7 @@ const Login = ({ setUser }) => {
   };
 
   return (
-    <>
-    <div className="flex flex-col items-center p-6 mx-auto my-12 max-w-md bg-purple-200 rounded-lg shadow-lg">
+    <div className="flex flex-col items-center p-6 mx-auto py-auto max-w-md bg-purple-200 rounded-lg shadow-lg">
       <h2 className="text-2xl font-bold mb-4">Sign In</h2>
 
       <input
@@ -33,13 +32,22 @@ const Login = ({ setUser }) => {
           <input type="checkbox" className="mr-2" />
           Remember me
         </label>
-        <a href="#!" className="text-blue-500">Forgot password?</a>
+        <a href="#!" className="text-blue-500">
+          Forgot password?
+        </a>
       </div>
 
-      <button className="w-full py-3 mb-4 bg-blue-500 text-white rounded-lg">Sign in</button>
+      <button className="w-full py-3 mb-4 bg-blue-500 text-white rounded-lg">
+        Sign in
+      </button>
 
       <div className="text-center">
-        <p className="mb-2">Not a member? <a href="#!" className="text-blue-500">Register</a></p>
+        <p className="mb-2">
+          Not a member?{" "}
+          <a href="#!" className="text-blue-500">
+            Register
+          </a>
+        </p>
         <p className="mb-4">or sign up with:</p>
 
         <div className="flex justify-around">
@@ -74,7 +82,6 @@ const Login = ({ setUser }) => {
         </div>
       </div>
     </div>
-    </>
   );
 };
 
