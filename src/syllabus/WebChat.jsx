@@ -179,14 +179,14 @@ The "routine" section should include a title and a start/end time like this exam
               {!isFinalSlide ? (
                 <button
                   onClick={handleNext}
-                  className="bg-purple text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                 >
                   Next
                 </button>
               ) : (
                 <button
                   onClick={handleDone}
-                  className="bg-purple text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-600"
                 >
                   Done
                 </button>
