@@ -11,6 +11,10 @@ import DataCP from "./components/DataCP";
 import styled from "styled-components";
 import { gsap, CSSPlugin, Expo } from "gsap";
 import Layout from "./components/layout";
+import HeroSection from "./components/Hero";
+import FeaturesSection from "./components/FeaturesSection";
+import EmployerSection from "./components/employers";
+import CTASection from "./components/calltoAction";
 gsap.registerPlugin(CSSPlugin);
 
 function App() {
@@ -59,9 +63,32 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/getCP" element={<DataCP />} />
-
+        <Route
+          path="/"
+          element={
+            <>
+              <Loading>
+                <Follow className="follow"></Follow>
+                <ProgressBar
+                  className="hide"
+                  id="progress-bar"
+                  style={{ width: counter + "%" }}
+                ></ProgressBar>
+                <Count id="count" className="hide">
+                  {counter}%
+                </Count>
+              </Loading>
+              <Content className="content">
+                <div className="bg-white text-black">
+                  <HeroSection />
+                  <FeaturesSection />
+                  <EmployerSection />
+                  <CTASection />
+                </div>
+              </Content>
+            </>
+          }
+        />
         <Route path="/home" element={<Layout />}>
           <Route index element={<Home />} />
         </Route>
@@ -75,25 +102,6 @@ function App() {
           element={<ResumeUpload studentId={"fKDUga9FWQtsXwVGd67u"} />}
         />
       </Routes>
-
-      <Loading>
-        <Follow className="follow"></Follow>
-        <ProgressBar
-          className="hide"
-          id="progress-bar"
-          style={{ width: counter + "%" }}
-        ></ProgressBar>
-        <Count id="count" className="hide">
-          {counter}%
-        </Count>
-      </Loading>
-
-      <Content className="content">
-        <p className="title-lines">The greatest glory in living lies</p>
-        <p className="title-lines">not in never falling,</p>
-        <p className="title-lines">but in rising every time we fall.</p>
-        <p className="title-lines">-Nelson Mandela</p>
-      </Content>
     </>
   );
 }
@@ -143,7 +151,7 @@ const Count = styled.p`
 `;
 
 const Content = styled.div`
-  height: 100%;
+  height: full;
   width: 0;
   position: absolute;
   left: 0;
