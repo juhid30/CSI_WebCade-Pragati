@@ -7,6 +7,7 @@ import Home from "./pages/home";
 import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
 import logo from "./assets/logo.png";
+import WebCam from "./components/100ms/Webcam";import logo from "./assets/logo.png";
 import CalendarC from "../src/components/Calendar"
 import styled from "styled-components";
 import { gsap, CSSPlugin, Expo } from "gsap";
@@ -21,7 +22,9 @@ import AppliedToRecruiter from "./components/AppliedToRecruiter";
 gsap.registerPlugin(CSSPlugin);
 import JobListingPage from "./components/JobListing";
 import BinningBoard from "./components/BinningBoard";
-import WebCam from "./components/100ms/Webcam";
+import SuggestionsModal from "./components/SuggestionsModal";
+gsap.registerPlugin(CSSPlugin);
+
 function App() {
   const [counter, setCounter] = useState(0);
   const [user, setUser] = useState();
@@ -116,6 +119,9 @@ function App() {
           path="/upload-resume"
           element={<ResumeUpload studentId={"fKDUga9FWQtsXwVGd67u"} />}
         />
+        <Route path="/binning" element={<BinningBoard />} />
+        <Route path="/sugg" element={<SuggestionsModal />} />
+        <Route path="/meet" element={<WebCam />} />
         <Route
           path="/calendar"
           element={<CalendarC />}
