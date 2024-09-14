@@ -65,19 +65,20 @@ function App() {
     <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/getCP" element={<DataCP />} />
+    <div className="bg-white min-h-[100vh]">
+      <Routes>
+        <Route path="/home" element={<Layout />}>
+          <Route index element={<Home />} />
+        </Route>
+        <Route path="/datacp" element={<Layout />}>
+          <Route index element={<DataCP />} />
+        </Route>
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/apply"
-          element={
-            <JobListingPage jobId={""} applicantId={"fKDUga9FWQtsXwVGd67u"} />
-          }
-        />
+        <Route path="/apply" element={<ApplyForJob />} />
         <Route
           path="/upload-resume"
           element={<ResumeUpload studentId={"fKDUga9FWQtsXwVGd67u"} />}
         />
-        <Route path="/jobs" element={<Jobs />} />
-        <Route path="/create-job" element={<ListJobs/>} />
       </Routes>
 
       <Loading>
