@@ -1,12 +1,9 @@
-import React from "react";
-import Navbar from "../components/Navbar";
 import CardsIntrest from "../components/CardsIntrest";
 import QuizComponent from "../components/Quiz";
-import DataCP from "../components/DataCP";
 
 export default function Home() {
   return (
-    <div className="relative">
+    <div className="relative h-[100vh]">
       <button
         className="btn absolute bottom-10 right-10"
         onClick={() => document.getElementById("cards_interest").showModal()}
