@@ -65,7 +65,6 @@ function App() {
     <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/getCP" element={<DataCP />} />
-    <div className="bg-white min-h-[100vh]">
       <Routes>
         <Route path="/home" element={<Layout />}>
           <Route index element={<Home />} />
@@ -79,6 +78,7 @@ function App() {
           path="/upload-resume"
           element={<ResumeUpload studentId={"fKDUga9FWQtsXwVGd67u"} />}
         />
+      </Routes>
       </Routes>
 
       <Loading>
@@ -99,6 +99,7 @@ function App() {
         <p className="title-lines">but in rising every time we fall.</p>
         <p className="title-lines">-Nelson Mandela</p>
       </Content>
+      
     </>
   );
 }
