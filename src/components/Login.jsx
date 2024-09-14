@@ -2,14 +2,6 @@
 import React from "react";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../firebase.js";
-import {
-  MDBContainer,
-  MDBInput,
-  MDBCheckbox,
-  MDBBtn,
-  MDBIcon
-}
-from 'mdb-react-ui-kit';
 
 const Login = ({ setUser }) => {
   const signInWithGoogle = async () => {
@@ -22,43 +14,68 @@ const Login = ({ setUser }) => {
   };
 
   return (
-    <MDBContainer className="p-3 my-5 d-flex flex-column w-50 bg-purple">
+    <>
+    <div className="flex flex-col items-center p-6 mx-auto my-12 max-w-md bg-purple-200 rounded-lg shadow-lg">
+      <h2 className="text-2xl font-bold mb-4">Sign In</h2>
 
-<MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email'/>
-<MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'/>
+      <input
+        className="w-full p-3 mb-4 border border-gray-300 rounded-lg"
+        type="email"
+        placeholder="Email address"
+      />
+      <input
+        className="w-full p-3 mb-4 border border-gray-300 rounded-lg"
+        type="password"
+        placeholder="Password"
+      />
 
-<div className="d-flex justify-content-between mx-3 mb-4">
-  <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
-  <a href="!#">Forgot password?</a>
-</div>
+      <div className="flex justify-between items-center w-full mb-4">
+        <label className="flex items-center">
+          <input type="checkbox" className="mr-2" />
+          Remember me
+        </label>
+        <a href="#!" className="text-blue-500">Forgot password?</a>
+      </div>
 
-<MDBBtn className="mb-4">Sign in</MDBBtn>
+      <button className="w-full py-3 mb-4 bg-blue-500 text-white rounded-lg">Sign in</button>
 
-<div className="text-center">
-  <p>Not a member? <a href="#!">Register</a></p>
-  <p>or sign up with:</p>
+      <div className="text-center">
+        <p className="mb-2">Not a member? <a href="#!" className="text-blue-500">Register</a></p>
+        <p className="mb-4">or sign up with:</p>
 
-  <div className='d-flex justify-content-between mx-auto' style={{width: '40%'}}>
-    <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#1266f1' }}>
-      <MDBIcon fab icon='facebook-f' size="sm"/>
-    </MDBBtn>
+        <div className="flex justify-around">
+          <button
+            className="p-2 text-blue-600 hover:bg-blue-100 rounded-full"
+            aria-label="Sign in with Facebook"
+          >
+            <i className="fab fa-facebook-f"></i>
+          </button>
 
-    <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#1266f1' }}>
-      <MDBIcon fab icon='twitter' size="sm"/>
-    </MDBBtn>
+          <button
+            className="p-2 text-blue-400 hover:bg-blue-100 rounded-full"
+            aria-label="Sign in with Twitter"
+          >
+            <i className="fab fa-twitter"></i>
+          </button>
 
-    <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#1266f1' }}>
-      <MDBIcon fab icon='google' size="sm"/>
-    </MDBBtn>
+          <button
+            className="p-2 text-red-500 hover:bg-red-100 rounded-full"
+            aria-label="Sign in with Google"
+            onClick={signInWithGoogle}
+          >
+            <i className="fab fa-google"></i>
+          </button>
 
-    <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#1266f1' }}>
-      <MDBIcon fab icon='github' size="sm"/>
-    </MDBBtn>
-
-  </div>
-</div>
-
-</MDBContainer>
+          <button
+            className="p-2 text-gray-800 hover:bg-gray-100 rounded-full"
+            aria-label="Sign in with GitHub"
+          >
+            <i className="fab fa-github"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    </>
   );
 };
 
