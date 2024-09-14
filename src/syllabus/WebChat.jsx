@@ -188,7 +188,7 @@ The "routine" section should include a title and a start/end time like this exam
                   onClick={handleDone}
                   className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-600"
                 >
-                  Done
+                  Don
                 </button>
               )}
             </div>
