@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import web from "./web.json";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-export default function ChatBotP() {
+export default function ChatBotW() {
   const [currentSubjectIndex, setCurrentSubjectIndex] = useState(0);
   const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
   const [selectedTopics, setSelectedTopics] = useState({});
@@ -144,9 +144,9 @@ The "routine" section should include a title and a start/end time like this exam
     <div className="flex flex-col h-[70vh] bg-gray-100">
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 text-black flex items-center justify-center z-50">
+        <div className="fixed inset-0 h-fit text-black flex items-center justify-center z-50">
           <div className="w-full max-w-lg bg-white shadow-lg rounded-t-lg p-4">
-            <h2 className="text-2xl font-bold mb-4">
+            <h2 className="text-2xl  font-bold mb-4">
               {currentSubject.subject}
             </h2>
             <h3 className="text-xl font-semibold mb-2">
@@ -179,17 +179,25 @@ The "routine" section should include a title and a start/end time like this exam
               {!isFinalSlide ? (
                 <button
                   onClick={handleNext}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+                  className="bg-blue-500 bg-purple text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                 >
                   Next
                 </button>
               ) : (
-                <button
-                  onClick={handleDone}
-                  className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-                >
-                  Don
-                </button>
+                <>
+                  <button
+                    onClick={handleDone}
+                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                  >
+                    Done
+                  </button>
+                  <button
+                    className="btn"
+                    onClick={() => document.getElementById("quiz").showModal()}
+                  >
+                    Take A Quiz
+                  </button>
+                </>
               )}
             </div>
           </div>

@@ -184,12 +184,20 @@ The "routine" section should include a title and a start/end time like this exam
                   Next
                 </button>
               ) : (
-                <button
-                  onClick={handleDone}
-                  className="bg-green-500 bg-purple text-white px-4 py-2 rounded-lg hover:bg-green-600"
-                >
-                  Done
-                </button>
+                <>
+                  <button
+                    onClick={handleDone}
+                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                  >
+                    Done
+                  </button>
+                  <button
+                    className="btn"
+                    onClick={() => document.getElementById("quiz").showModal()}
+                  >
+                    Take A Quiz
+                  </button>
+                </>
               )}
             </div>
           </div>
