@@ -2,8 +2,12 @@
 import React, { useState, useEffect } from "react";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { db } from "../../firebase"; // Adjust the import path if necessary
+import axios from "axios";
 
 const Modal = ({ isOpen, onClose, job }) => {
+  const [myselfString, setMyselfString] = useState(""); // State for the user input
+  const [isSubmitting, setIsSubmitting] = useState(false); // Loading state for the form submission
+
   const handleApply = async () => {
     const studentId = localStorage.getItem("studentDocId");
     const recruiterId = job.recruiterId; // Assuming the recruiter ID is stored in the job data
@@ -22,10 +26,29 @@ const Modal = ({ isOpen, onClose, job }) => {
     };
 
     try {
+      setIsSubmitting(true);
+
+      // Save applied job to Firestore
       await addDoc(collection(db, "appliedJobs"), appliedJobData);
+
+      // Send the input text to the API
+      const formData = new FormData();
+      formData.append("input_text", myselfString);
+
+      const response = await axios.post(
+        "http://localhost:5000/upload_text",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
       alert("You have successfully applied for the job!");
+      console.log("API Response:", response.data);
     } catch (error) {
       console.error("Error applying for the job: ", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -60,9 +83,10 @@ const Modal = ({ isOpen, onClose, job }) => {
         {/* Apply Button */}
         <button
           onClick={handleApply}
-          className="mt-6 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          disabled={isSubmitting || !myselfString.trim()}
+          className={`mt-6 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
         >
-          Apply for this Job
+          {isSubmitting ? "Submitting..." : "Apply for this Job"}
         </button>
 
         {/* Close Button */}
