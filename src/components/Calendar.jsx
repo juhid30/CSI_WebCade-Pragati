@@ -1,37 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Fullcalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-
-function CalendarC() {
-  return (
-    <div className="h-[100vh]">
-      {/* <Navbar /> */}
-      <div className="flex h-[90%]">
-        <div className="w-[7.5%] flex flex-col ">
-          {/* <Sidebar /> */}
-        </div>
-        <div className="bg-[] w-[92.5%] h-full p-9 flex">
-          <CalendarComponent />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default CalendarC;
+import { collection, query, limit, getDocs } from "firebase/firestore";
+import { db } from "../../firebase"; // Import your Firestore instance
 
 function CalendarComponent() {
-  // Define a temporary event
-  const events = [
-    {
-      id: '1',
-      title: 'Sample Event',
-      start: '2024-09-15T10:00:00', // Start time of the event
-      end: '2024-09-15T12:00:00'    // End time of the event
-    }
-  ];
+  const [events, setEvents] = useState([]); // State to hold events
+
+  // Fetch events from Firestore on component mount
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        // Query to fetch one document from the calendarData collection
+        const q = query(
+          collection(db, "calendarData"),
+          limit(1) // Limit to only one document
+        );
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const doc = querySnapshot.docs[0]; // Get the first document
+          const routineArray = doc.data().routineArray || []; // Get the routineArray or default to an empty array
+
+          // Convert routineArray to FullCalendar event format
+          const fetchedEvents = routineArray.map((routine) => ({
+            id: routine.id || Math.random().toString(36).substr(2, 9), // Use a unique ID
+            title: routine.title,
+            start: routine.start,
+            end: routine.end
+          }));
+
+          setEvents(fetchedEvents); // Update the events state with fetched data
+        } else {
+          console.log("No documents found");
+        }
+      } catch (error) {
+        console.error("Error fetching events: ", error);
+      }
+    };
+
+    fetchEvents();
+  }, []); // Empty dependency array means this effect runs once on mount
 
   return (
     <div className="w-[100%]">
@@ -44,8 +55,10 @@ function CalendarComponent() {
           end: "dayGridMonth,timeGridWeek,timeGridDay",
         }}
         height={"100%"}
-        events={events}
+        events={events} // Use the fetched events here
       />
     </div>
   );
 }
+
+export default CalendarComponent;

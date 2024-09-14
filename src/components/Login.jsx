@@ -28,6 +28,7 @@ const Login = ({ setUser }) => {
           const docId = studentQuerySnapshot.docs[0].id;
           localStorage.setItem("studentDocId", docId);
           localStorage.setItem("studentRole", role);
+          navigate("/upload-resume");
           setUser(user);
           navigate("/home"); // You can replace "/home" with another path if needed
         } else {
