@@ -13,7 +13,7 @@ import BinningPage from "./components/BinningPage";
 function App() {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <Login />
     </>
   );
