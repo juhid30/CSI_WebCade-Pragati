@@ -4,15 +4,16 @@ import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import App from "./App.jsx";
 import "./index.css";
-import theme from "../src/components/CodeEditor/theme.js"
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "../src/components/CodeEditor/theme.js";
 
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <BrowserRouter>
+      <BrowserRouter/>
+      <AnimCursor/>
         <App />
-      </BrowserRouter>
-    </ChakraProvider>
-  </React.StrictMode>
+      </ChakraProvider>
+    </React.StrictMode>
 );
