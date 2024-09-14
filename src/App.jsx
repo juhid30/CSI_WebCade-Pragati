@@ -9,12 +9,17 @@ import Login from "./components/Login";
 import ListJobs from "./components/ListJobs";
 import Navbar from "./components/Navbar";
 import BinningPage from "./components/BinningPage";
+import JobListingPage from "./components/JobListing";
+import Test from "./components/Test";
+import ApplyForJob from "./components/ApplyForJob";
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Login />
+      <ApplyForJob />
+      {/* <Test /> */}
+      {/* <JobListingPage /> */}
+      {/* <BinningPage /> */}
     </>
   );
 }
