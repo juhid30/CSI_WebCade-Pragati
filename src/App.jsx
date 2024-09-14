@@ -6,7 +6,6 @@ import Login from "./components/Login";
 
 import Home from "./pages/home";
 import ResumeUpload from "./components/ResumeUpload";
-import ApplyForJob from "./components/ApplyForJob";
 import DataCP from "./components/DataCP";
 import Jobs from "./components/Jobs";
 import ListJobs from "./components/ListJobs";
@@ -67,7 +66,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/getCP" element={<DataCP />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/apply" element={<ApplyForJob />} />
+        <Route
+          path="/apply"
+          element={
+            <JobListingPage jobId={""} applicantId={"fKDUga9FWQtsXwVGd67u"} />
+          }
+        />
         <Route
           path="/upload-resume"
           element={<ResumeUpload studentId={"fKDUga9FWQtsXwVGd67u"} />}

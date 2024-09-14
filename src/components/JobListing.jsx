@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { db } from "../../firebase"; // Your Firebase configuration
 import { calculateOverallRating } from "../utils/utils"; // Utility function
+import { doc, getDoc, addDoc, collection } from "firebase/firestore";
 
 const JobListingPage = ({ jobId, applicantId }) => {
   const [suitabilityText, setSuitabilityText] = useState("");
@@ -17,42 +18,62 @@ const JobListingPage = ({ jobId, applicantId }) => {
     setIsSubmitting(true);
 
     try {
-      // Step 1: Fetch resume score (assuming it's already stored in Firestore for the applicant)
-      const resumeDoc = await db
-        .collection("Applicants")
-        .doc(applicantId)
-        .get();
-      const resumeScore = resumeDoc.data().resumeScore || 80; // Fallback resume score if not found
+      // Step 1: Fetch resume score and strengths from the student's document in Firestore
+      const applicantDocRef = doc(db, "studentData", applicantId);
+      const applicantDoc = await getDoc(applicantDocRef);
 
-      // Step 2: Get text score from Flask API
-      const textResponse = await axios.post(
-        "http://localhost:5000/upload_text",
-        {
-          text: suitabilityText,
-        }
-      );
-      const textScore = textResponse.data.rating;
+      if (!applicantDoc.exists()) {
+        throw new Error("Applicant document not found");
+      }
 
-      // Step 3: Calculate overall rating and top strengths
-      const strengths = resumeDoc.data().strengths || [
+      const applicant = applicantDoc.data();
+      console.log(applicant);
+      const resumeScore = applicant.responseData?.rating?.score || 7; // Fallback resume score if not found
+      console.log(resumeScore);
+      const strengths = applicant.responseData?.strengths || [
         "Teamwork",
         "Leadership",
         "Communication",
       ]; // Fallback strengths if not found
-      const { overallRating, topStrengths } = calculateOverallRating(
-        resumeScore,
-        textScore,
-        strengths
+      console.log(strengths);
+      const formData = new FormData();
+      formData.append("input_text", suitabilityText);
+      // Step 2: Get text score from the API
+      const textResponse = await axios.post(
+        "http://localhost:5000/upload_text",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            // Include any authorization token if required
+          },
+        }
       );
+      console.log(textResponse.data.response);
+      const textScore = textResponse.data.response.rating;
+      console.log(textScore);
+      const strengthsArray = Object.values(strengths);
+      // Step 3: Calculate overall rating and top strengths
+      const resumeScoreNumber = Number(resumeScore);
+      const textScoreNumber = Number(textScore);
+      const { overallRating, topStrengths } = calculateOverallRating(
+        resumeScoreNumber,
+        textScoreNumber,
+        strengthsArray
+      );
+      console.log({ overallRating, topStrengths });
 
       // Step 4: Save the application in Firestore with overall rating and strengths
-      await db.collection("Applications").add({
+      await addDoc(collection(db, "Applications"), {
         jobId,
         applicantId,
         overallRating,
         topStrengths,
         suitabilityText,
         appliedAt: new Date(),
+        resumeScore, // Include resume score for reference
+        textScore,
+        textResponse: textResponse.data, // Save the entire response for reference
       });
 
       alert("Application submitted successfully!");
