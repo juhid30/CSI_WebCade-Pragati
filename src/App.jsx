@@ -120,12 +120,27 @@ function App() {
         </Route>
         <Route path="/login" element={<Login setUser={setUser} />} />
         {/* <Route path="/apply" element={<ApplyForJob />} /> */}
-        <Route path="/resume-upload" element={<ResumeUpload />} />
-        <Route path="/binning" element={<BinningBoard />} />
-        <Route path="/sugg" element={<SuggestionsModal />} />
-        <Route path="/meet" element={<WebCam />} />
-        <Route path="/calendar" element={<CalendarC />} />
-        <Route path="/jobs" element={<Jobs />} />
+        <Route path="/upload-resume" element={<Layout />}>
+          <Route index element={<ResumeUpload />} />
+        </Route>
+        <Route path="/home" element={<Layout />}>
+          <Route index element={<Home />} />
+        </Route>
+        <Route path="/binning" element={<Layout />}>
+          <Route index element={<BinningBoard />} />
+        </Route>
+        <Route path="/sugg" element={<Layout />}>
+          <Route index element={<SuggestionsModal />} />
+        </Route>
+        <Route path="/meet" element={<Layout />}>
+          <Route index element={<WebCam />} />
+        </Route>
+        <Route path="/calendar" element={<Layout />}>
+          <Route index element={<CalendarC />} />
+        </Route>
+        <Route path="/jobs" element={<Layout />}>
+          <Route index element={<Jobs />} />
+        </Route>
       </Routes>
     </>
   );
