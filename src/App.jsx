@@ -7,12 +7,13 @@ import "./App.css";
 import Login from "./components/Login";
 import ListJobs from "./components/ListJobs";
 import Navbar from "./components/Navbar";
+import BinningPage from "./components/BinningPage";
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Login />
+      <ListJobs />
+      {/* <BinningPage /> */}
     </>
   );
 }
