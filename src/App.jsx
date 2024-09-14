@@ -5,9 +5,14 @@ import "./index.css"; // Import tailwind styles
 
 import "./App.css";
 import Login from "./components/Login";
+import ListJobs from "./components/ListJobs";
 
 function App() {
-  return <Login />;
+  return (
+    <>
+      <ListJobs />
+    </>
+  );
 }
 
 export default App;
