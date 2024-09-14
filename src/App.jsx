@@ -10,10 +10,12 @@ import ListJobs from "./components/ListJobs";
 import Navbar from "./components/Navbar";
 import CardsIntrest from "./components/CardsIntrest";
 import BinningPage from "./components/BinningPage";
+import Hero from "./components/Hero";
 
 function App() {
   return (
     <>
+    <Hero/>
       <Navbar />
       <Login />
       {/* Open the modal using document.getElementById('ID').showModal() method */}
