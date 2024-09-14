@@ -30,7 +30,7 @@ const Login = ({ setUser }) => {
           console.log("Student DocID: ", docId);
           localStorage.setItem("studentDocId", docId);
           localStorage.setItem("studentRole", role);
-          navigate("/home");
+          navigate("/upload-resume");
           setUser(user);
         } else {
           // Student doesn't exist, ask for resume upload
