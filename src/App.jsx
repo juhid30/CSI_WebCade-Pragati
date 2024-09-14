@@ -9,9 +9,9 @@ import ListJobs from "./components/ListJobs";
 import Navbar from "./components/Navbar";
 
 function App() {
-  return(
+  return (
     <>
-      <Navbar/>
+      <Navbar />
       <Login />
     </>
   );
