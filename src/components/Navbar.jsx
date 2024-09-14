@@ -5,7 +5,8 @@ import logo from "../assets/logo.png";
 import { useEffect, useState } from "react";
 
 const navigationstudent = [
-  { name: "Profile", href: "/upload-resume", current: false },
+  { name: "Resume", href: "/upload-resume", current: false },
+  { name: "Profile", href: "/home", current: false },
   { name: "Rating", href: "/datacp", current: false },
   { name: "View Jobs", href: "/jobs", current: false },
   { name: "Calendar", href: "/calendar", current: false },

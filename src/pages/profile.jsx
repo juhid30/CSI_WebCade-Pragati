@@ -41,6 +41,7 @@ export default function Profile() {
       <div className="text-center mt-10">No data found for this user.</div>
     );
   }
+  console.log(userData.responseData);
 
   const { name, email, age, university, responseData } = userData;
   const { key_qualifications_and_experience, summary } = responseData;
@@ -56,18 +57,6 @@ export default function Profile() {
         <div>
           <p className="text-lg font-semibold">Name:</p>
           <p className="text-gray-700">{name}</p>
-        </div>
-        <div>
-          <p className="text-lg font-semibold">Email:</p>
-          <p className="text-gray-700">{email}</p>
-        </div>
-        <div>
-          <p className="text-lg font-semibold">Age:</p>
-          <p className="text-gray-700">{age}</p>
-        </div>
-        <div>
-          <p className="text-lg font-semibold">University:</p>
-          <p className="text-gray-700">{university}</p>
         </div>
       </div>
 
