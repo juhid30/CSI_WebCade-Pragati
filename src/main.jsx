@@ -1,18 +1,19 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import App from "./App.jsx";
 import "./index.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "../src/components/CodeEditor/theme.js";
-import AnimCursor from "./anim/AnimCursor.jsx";
 
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
-      <ChakraProvider theme={theme}>
+createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <ChakraProvider theme={theme}>
+      <BrowserRouter/>
+      <AnimCursor/>
         <App />
-        <AnimCursor/>
       </ChakraProvider>
     </React.StrictMode>
 );
-
