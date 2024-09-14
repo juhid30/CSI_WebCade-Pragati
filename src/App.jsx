@@ -7,11 +7,13 @@ import Login from "./components/Login";
 import Home from "./pages/home";
 import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
-import JobListingPage from "./components/JobListing";
+import Jobs from "./components/Jobs";
+import ListJobs from "./components/ListJobs";
 
 function App() {
   return (
     <div className="bg-white min-h-[100vh]">
+      <Sidebar/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/getCP" element={<DataCP />} />
@@ -26,6 +28,8 @@ function App() {
           path="/upload-resume"
           element={<ResumeUpload studentId={"fKDUga9FWQtsXwVGd67u"} />}
         />
+        <Route path="/jobs" element={<Jobs />} />
+        <Route path="/create-job" element={<ListJobs/>} />
       </Routes>
     </div>
   );
