@@ -1,0 +1,32 @@
+.peer-container {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  /* background-color: #d43939; */
+}
+
+.peer-video {
+  width: 40vw; /* Adjust width */
+  aspect-ratio: 16 / 9; /* Adjust aspect ratio to maintain proportion */
+  margin: 20px;
+  border: 2px solid #757575;
+  border-radius: 10px;
+}
+
+.peer-video.local {
+  border: 2px solid #238826;
+  border-radius: 10px;
+}
+
+.peer-overlay {
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+}
+
+.peer-name {
+  font-weight: bold;
+}

@@ -3,11 +3,13 @@ import { signInWithPopup } from "firebase/auth";
 import { auth, provider, db } from "../../firebase.js";
 import { FaGoogle } from "react-icons/fa";
 import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ setUser }) => {
   const [showModal, setShowModal] = useState(false); // Modal state
   const [resume, setResume] = useState(null); // File upload state
   const [role, setRole] = useState("Student"); // Role state
+  const navigate = useNavigate();
 
   const signInWithGoogle = async () => {
     try {
@@ -27,6 +29,8 @@ const Login = ({ setUser }) => {
           const docId = studentQuerySnapshot.docs[0].id;
           console.log("Student DocID: ", docId);
           localStorage.setItem("studentDocId", docId);
+          localStorage.setItem("studentRole", role);
+          navigate("/home");
           setUser(user);
         } else {
           // Student doesn't exist, ask for resume upload
@@ -57,6 +61,7 @@ const Login = ({ setUser }) => {
           });
           console.log("New Recruiter created with DocID: ", newRecruiter.id);
           localStorage.setItem("recruiterDocId", newRecruiter.id);
+          localStorage.setItem("studentRole", role);
           setUser(user);
         }
       }
