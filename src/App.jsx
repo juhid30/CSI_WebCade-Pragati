@@ -1,18 +1,20 @@
 import "./index.css"; // Import tailwind styles
 import { Route, Routes } from "react-router-dom";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Login from "./components/Login";
 import Home from "./pages/home";
 import ResumeUpload from "./components/ResumeUpload";
 import DataCP from "./components/DataCP";
-import Jobs from "./components/Jobs";
-import ListJobs from "./components/ListJobs";
-import { Sidebar } from "lucide";
-import styled from 'styled-components';
-import { gsap, CSSPlugin, Expo } from "gsap";
-gsap.registerPlugin(CSSPlugin);
 
+import styled from "styled-components";
+import { gsap, CSSPlugin, Expo } from "gsap";
+import Layout from "./components/layout";
+import HeroSection from "./components/Hero";
+import FeaturesSection from "./components/FeaturesSection";
+import EmployerSection from "./components/employers";
+import CTASection from "./components/calltoAction";
+gsap.registerPlugin(CSSPlugin);
 
 function App() {
   const [counter, setCounter] = useState(0);
@@ -57,14 +59,35 @@ function App() {
       });
   };
 
-
-
   return (
     <>
-    <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/getCP" element={<DataCP />} />
       <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Loading>
+                <Follow className="follow"></Follow>
+                <ProgressBar
+                  className="hide"
+                  id="progress-bar"
+                  style={{ width: counter + "%" }}
+                ></ProgressBar>
+                <Count id="count" className="hide">
+                  {counter}%
+                </Count>
+              </Loading>
+              <Content className="content">
+                <div className="bg-white text-black">
+                  <HeroSection />
+                  <FeaturesSection />
+                  <EmployerSection />
+                  <CTASection />
+                </div>
+              </Content>
+            </>
+          }
+        />
         <Route path="/home" element={<Layout />}>
           <Route index element={<Home />} />
         </Route>
@@ -72,41 +95,19 @@ function App() {
           <Route index element={<DataCP />} />
         </Route>
         <Route path="/login" element={<Login />} />
-        <Route path="/apply" element={<ApplyForJob />} />
+        {/* <Route path="/apply" element={<ApplyForJob />} /> */}
         <Route
           path="/upload-resume"
           element={<ResumeUpload studentId={"fKDUga9FWQtsXwVGd67u"} />}
         />
       </Routes>
-      </Routes>
-
-      <Loading>
-        <Follow className="follow"></Follow>
-        <ProgressBar
-          className="hide"
-          id="progress-bar"
-          style={{ width: counter + "%" }}
-        ></ProgressBar>
-        <Count id="count" className="hide">
-          {counter}%
-        </Count>
-      </Loading>
-
-      <Content className="content">
-        <p className="title-lines">The greatest glory in living lies</p>
-        <p className="title-lines">not in never falling,</p>
-        <p className="title-lines">but in rising every time we fall.</p>
-        <p className="title-lines">-Nelson Mandela</p>
-      </Content>
-      
     </>
   );
 }
 
 export default App;
 
-
-const AppContainer = styled.div`
+styled.div`
   width: 100vw;
   height: 100vh;
   color: #000000;
@@ -149,7 +150,7 @@ const Count = styled.p`
 `;
 
 const Content = styled.div`
-  height: 100%;
+  height: full;
   width: 0;
   position: absolute;
   left: 0;

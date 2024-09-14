@@ -6,7 +6,7 @@ import DataCP from "../components/DataCP";
 
 export default function Home() {
   return (
-    <div className="relative h-[100vh]">
+    <div className="relative">
       <button
         className="btn absolute bottom-10 right-10"
         onClick={() => document.getElementById("cards_interest").showModal()}
