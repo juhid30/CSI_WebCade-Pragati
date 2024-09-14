@@ -88,6 +88,7 @@ const Login = ({ setUser }) => {
         console.error("Error uploading resume: ", error);
       }
     }
+    
   };
 
   return (
